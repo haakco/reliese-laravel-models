@@ -24,7 +24,7 @@ class Factory
     /**
      * @var \Reliese\Meta\SchemaManager
      */
-    protected $schemas = [];
+    protected $schemas;
 
     /**
      * @var \Illuminate\Filesystem\Filesystem
@@ -369,6 +369,8 @@ class Factory
 
         $excludedConstants = [];
 
+        $body .= "\n";
+
         if ($model->hasCustomCreatedAtField()) {
             $body .= $this->class->constant(strtoupper($model->getCreatedAtField()), $model->getCreatedAtField());
             $excludedConstants[] = $model->getCreatedAtField();
@@ -397,13 +399,15 @@ class Factory
         $body = trim($body, "\n");
         // Separate constants from fields only if there are constants.
         if (! empty($body)) {
-            $body .= "\n";
+            $body .= "\n\n";
         }
 
         // Append connection name when required
         if ($model->shouldShowConnection()) {
             $body .= $this->class->field('connection', $model->getConnectionName());
         }
+
+        $body .= "\n\n";
 
         // When table is not plural, append the table name
         if ($model->needsTableName()) {
@@ -539,7 +543,7 @@ class Factory
      */
     private function getBaseClassName(Model $model)
     {
-        return 'Base'.$model->getClassName();
+        return 'Base' . $model->getClassName();
     }
 
     /**
