@@ -288,7 +288,7 @@ class Factory
         $result = [];
         foreach ($usedClasses as $usedClass) {
             // Do not import classes from same namespace
-            $namespacePattern = str_replace('\\', '\\\\', "/{$baseNamespace}\\[a-zA-Z0-9_]*/");
+            $namespacePattern = str_replace('\\', '\\\\', "/{$baseNamespace}\\[^\\]*$/");
             if (! preg_match($namespacePattern, $usedClass)) {
                 $result[] = "use {$usedClass};";
             }
