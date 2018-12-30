@@ -372,17 +372,26 @@ class Factory
         $body .= "\n";
 
         if ($model->hasCustomCreatedAtField()) {
-            $body .= $this->class->constant(strtoupper($model->getCreatedAtField()), $model->getCreatedAtField());
+            $body .= $this->class->constant('CREATED_AT', $model->getCreatedAtField());
+            if ($model->usesPropertyConstants() && 'CREATED_AT' !== $model->getCreatedAtField()) {
+                $body .= $this->class->constant(strtoupper($model->getCreatedAtField()), $model->getCreatedAtField());
+            }
             $excludedConstants[] = $model->getCreatedAtField();
         }
 
         if ($model->hasCustomUpdatedAtField()) {
-            $body .= $this->class->constant(strtoupper($model->getUpdatedAtField()), $model->getUpdatedAtField());
+            $body .= $this->class->constant('UPDATED_AT', $model->getUpdatedAtField());
+            if ($model->usesPropertyConstants() && 'UPDATED_AT' !== $model->getUpdatedAtField()) {
+                $body .= $this->class->constant(strtoupper($model->getUpdatedAtField()), $model->getUpdatedAtField());
+            }
             $excludedConstants[] = $model->getUpdatedAtField();
         }
 
         if ($model->hasCustomDeletedAtField()) {
-            $body .= $this->class->constant(strtoupper($model->getDeletedAtField()), $model->getDeletedAtField());
+            $body .= $this->class->constant('DELETED_AT', $model->getDeletedAtField());
+            if ($model->usesPropertyConstants() && 'DELETED_AT' !== $model->getDeletedAtField()) {
+                $body .= $this->class->constant(strtoupper($model->getDeletedAtField()), $model->getDeletedAtField());
+            }
             $excludedConstants[] = $model->getDeletedAtField();
         }
 
