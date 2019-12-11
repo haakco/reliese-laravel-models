@@ -32,7 +32,7 @@ abstract class HasOneOrMany implements Relation
     /**
      * HasManyWriter constructor.
      *
-     * @param \Illuminate\Support\Fluent $command
+     * @param \Illuminate\Support\Fluent  $command
      * @param \Reliese\Coders\Model\Model $parent
      * @param \Reliese\Coders\Model\Model $related
      */
@@ -92,6 +92,10 @@ abstract class HasOneOrMany implements Relation
     protected function needsForeignKey()
     {
         $defaultForeignKey = $this->parent->getRecordName().'_id';
+
+        if ($this->parent->shouldQualifyTableName()) {
+            $defaultForeignKey = $this->parent->getTable().'_'.$defaultForeignKey;
+        }
 
         return $defaultForeignKey != $this->foreignKey() || $this->needsLocalKey();
     }

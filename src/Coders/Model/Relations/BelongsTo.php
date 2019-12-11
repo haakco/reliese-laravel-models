@@ -33,7 +33,7 @@ class BelongsTo implements Relation
     /**
      * BelongsToWriter constructor.
      *
-     * @param \Illuminate\Support\Fluent $command
+     * @param \Illuminate\Support\Fluent  $command
      * @param \Reliese\Coders\Model\Model $parent
      * @param \Reliese\Coders\Model\Model $related
      */
@@ -123,6 +123,10 @@ class BelongsTo implements Relation
     protected function needsForeignKey()
     {
         $defaultForeignKey = $this->related->getRecordName().'_id';
+
+        if ($this->parent->shouldQualifyTableName()) {
+            $defaultForeignKey = $this->parent->getTable().'_'.$defaultForeignKey;
+        }
 
         return $defaultForeignKey != $this->foreignKey() || $this->needsOtherKey();
     }

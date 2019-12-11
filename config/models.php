@@ -27,6 +27,8 @@ return [
 
         'path' => app_path('Models'),
 
+        'path_connection'       => true,
+
         /*
         |--------------------------------------------------------------------------
         | Model Namespace
@@ -39,6 +41,20 @@ return [
         */
 
         'namespace' => 'App\Models',
+
+        'namespace_connection'  => true,
+        'namespace_schema'      => true,
+
+        /*
+         |--------------------------------------------------------------------------
+         | Schema In Model Namespace
+         |--------------------------------------------------------------------------
+         |
+         | Include database schema into model namespace. {namespace}\{schema}\{table}
+         |
+         */
+
+        'namespace_schema' => true,
 
         /*
         |--------------------------------------------------------------------------

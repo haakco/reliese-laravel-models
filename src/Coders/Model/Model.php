@@ -165,10 +165,10 @@ class Model
     /**
      * ModelClass constructor.
      *
-     * @param \Reliese\Meta\Blueprint $blueprint
-     * @param \Reliese\Coders\Model\Factory $factory
+     * @param \Reliese\Meta\Blueprint         $blueprint
+     * @param \Reliese\Coders\Model\Factory   $factory
      * @param \Reliese\Coders\Model\Mutator[] $mutators
-     * @param bool $loadRelations
+     * @param bool                            $loadRelations
      */
     public function __construct(Blueprint $blueprint, Factory $factory, $mutators = [], $loadRelations = true)
     {
@@ -280,6 +280,10 @@ class Model
             $this->hidden[] = $propertyName;
         }
 
+        if ($column->name == $this->getPrimaryKey()) {
+            $this->primaryKeyColumn = $column;
+        }
+
         if ($this->isFillable($column->name)) {
             $this->fillable[] = $propertyName;
         }
@@ -294,10 +298,6 @@ class Model
         // Track PHP type hints
         $hint = $this->phpTypeHint($cast);
         $this->properties[$column->name] = $hint;
-
-        if ($column->name == $this->getPrimaryKey()) {
-            $this->primaryKeyColumn = $column;
-        }
     }
 
     /**
@@ -322,7 +322,7 @@ class Model
      */
     public function makeRelationModel(Fluent $relation)
     {
-        list($database, $table) = array_values($relation->on);
+        [$database, $table] = array_values($relation->on);
 
         if ($this->blueprint->is($database, $table)) {
             return $this;
@@ -445,6 +445,17 @@ class Model
      */
     public function withNamespace($namespace)
     {
+        $namespaceSchema = $this->config('namespace_schema', false);
+        $namespaceConnection = $this->config('namespace_connection', false);
+
+        if ($namespaceConnection) {
+            $namespace .= '\\'.$this->factory->transformSchemaToNamespace($this->blueprint->connection());
+        }
+
+        if ($namespaceSchema) {
+            $namespace .= '\\'.$this->factory->transformSchemaToNamespace($this->getSchema());
+        }
+
         $this->namespace = $namespace;
 
         return $this;
@@ -483,7 +494,7 @@ class Model
      */
     public function withParentClass($parent)
     {
-        $this->parentClass = $parent;
+        $this->parentClass = '\\'.ltrim($parent, '\\');
 
         return $this;
     }
@@ -705,7 +716,7 @@ class Model
      */
     public function needsTableName()
     {
-        return false === $this->shouldQualifyTableName() ||
+        return true === $this->shouldQualifyTableName() ||
             $this->shouldRemoveTablePrefix() ||
             $this->blueprint->table() != Str::plural($this->getRecordName()) ||
             ! $this->shouldPluralizeTableName();
@@ -798,6 +809,7 @@ class Model
 
     /**
      * @todo: Improve it
+     *
      * @return string
      */
     public function getPrimaryKey()
@@ -820,6 +832,7 @@ class Model
 
     /**
      * @todo: Check whether it is necessary
+     *
      * @return bool
      */
     public function hasCustomPrimaryKeyCast()
@@ -1109,8 +1122,10 @@ class Model
             $this->getDeletedAtField(),
         ];
 
-        if ($this->primaryKeys->columns) {
-            $protected = array_merge($protected, $this->primaryKeys->columns);
+        if ($this->autoincrement()) {
+            if ($this->primaryKeys->columns) {
+                $protected = array_merge($protected, $this->primaryKeys->columns);
+            }
         }
 
         foreach (array_merge($guarded, $protected) as $pattern) {
@@ -1214,7 +1229,7 @@ class Model
 
     /**
      * @param string $key
-     * @param mixed $default
+     * @param mixed  $default
      *
      * @return mixed
      */

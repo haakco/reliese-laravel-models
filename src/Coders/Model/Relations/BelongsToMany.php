@@ -44,8 +44,8 @@ class BelongsToMany implements Relation
     /**
      * BelongsToMany constructor.
      *
-     * @param \Illuminate\Support\Fluent $parentCommand
-     * @param \Illuminate\Support\Fluent $referenceCommand
+     * @param \Illuminate\Support\Fluent  $parentCommand
+     * @param \Illuminate\Support\Fluent  $referenceCommand
      * @param \Reliese\Coders\Model\Model $parent
      * @param \Reliese\Coders\Model\Model $pivot
      * @param \Reliese\Coders\Model\Model $reference
@@ -153,7 +153,7 @@ class BelongsToMany implements Relation
      */
     protected function pivotTable()
     {
-        if ($this->parent->getSchema() != $this->pivot->getSchema()) {
+        if ($this->parent->shouldQualifyTableName()) {
             return $this->pivot->getQualifiedTable();
         }
 
@@ -166,6 +166,10 @@ class BelongsToMany implements Relation
     protected function needsForeignKey()
     {
         $defaultForeignKey = $this->parentRecordName().'_id';
+
+        if ($this->parent->shouldQualifyTableName()) {
+            $defaultForeignKey = $this->parent->getTable().'_'.$defaultForeignKey;
+        }
 
         return $this->foreignKey() != $defaultForeignKey || $this->needsOtherKey();
     }

@@ -29,7 +29,7 @@ class ReferenceFactory
     /**
      * ReferenceFactory constructor.
      *
-     * @param array $related
+     * @param array                       $related
      * @param \Reliese\Coders\Model\Model $parent
      */
     public function __construct($related, $parent)
@@ -43,18 +43,20 @@ class ReferenceFactory
      */
     public function make()
     {
-        if ($this->hasPivot()) {
-            $relations = [];
+        $relations = [];
 
+        if ($this->hasPivot()) {
             foreach ($this->references as $reference) {
                 $relation = new BelongsToMany($this->getRelatedReference(), $reference['command'], $this->parent, $this->getRelatedModel(), $reference['model']);
                 $relations[$relation->name()] = $relation;
             }
-
-            return $relations;
         }
 
-        return [new HasOneOrManyStrategy($this->getRelatedReference(), $this->parent, $this->getRelatedModel())];
+        $relation = new HasOneOrManyStrategy($this->getRelatedReference(), $this->parent, $this->getRelatedModel());
+
+        $relations[$relation->name()] = $relation;
+
+        return $relations;
     }
 
     /**
@@ -86,7 +88,7 @@ class ReferenceFactory
             if (Str::contains($pivot, $target->getRecordName())) {
                 $this->references[] = [
                     'command' => $reference,
-                    'model' => $target,
+                    'model'   => $target,
                 ];
             }
         }

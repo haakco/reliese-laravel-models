@@ -12,9 +12,11 @@ use RuntimeException;
 use IteratorAggregate;
 use Illuminate\Database\MySqlConnection;
 use Illuminate\Database\SQLiteConnection;
+use Illuminate\Database\PostgresConnection;
 use Illuminate\Database\ConnectionInterface;
 use Reliese\Meta\MySql\Schema as MySqlSchema;
 use Reliese\Meta\Sqlite\Schema as SqliteSchema;
+use Reliese\Meta\Postgres\Schema as PostgresSchema;
 
 class SchemaManager implements IteratorAggregate
 {
@@ -22,9 +24,10 @@ class SchemaManager implements IteratorAggregate
      * @var array
      */
     protected static $lookup = [
-        MySqlConnection::class => MySqlSchema::class,
-        SQLiteConnection::class => SqliteSchema::class,
+        MySqlConnection::class    => MySqlSchema::class,
+        SQLiteConnection::class   => SqliteSchema::class,
         \Larapack\DoctrineSupport\Connections\MySqlConnection::class => MySqlSchema::class,
+        PostgresConnection::class => PostgresSchema::class,
     ];
 
     /**
@@ -55,12 +58,6 @@ class SchemaManager implements IteratorAggregate
     {
         if (! $this->hasMapping()) {
             throw new RuntimeException("There is no Schema Mapper registered for [{$this->type()}] connection.");
-        }
-
-        $schemas = forward_static_call([$this->getMapper(), 'schemas'], $this->connection);
-
-        foreach ($schemas as $schema) {
-            $this->make($schema);
         }
     }
 
@@ -132,6 +129,13 @@ class SchemaManager implements IteratorAggregate
      */
     public function getIterator()
     {
+        if (empty($this->schemas)) {
+            $schemas = forward_static_call([$this->getMapper(), 'schemas'], $this->connection);
+            foreach ($schemas as $schema) {
+                $this->make($schema);
+            }
+        }
+
         return new ArrayIterator($this->schemas);
     }
 }
