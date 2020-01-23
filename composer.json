@@ -1,51 +1,55 @@
 {
-    "name": "reliese/laravel",
-    "description": "Reliese Components for Laravel Framework code generation.",
-    "keywords": ["reliese", "laravel"],
-    "homepage": "http://cristianllanos.com",
-    "support": {
-        "issues": "https://github.com/reliese/laravel/issues",
-        "source": "https://github.com/reliese/laravel"
-    },
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Cristian Llanos",
-            "email": "cristianllanos@outlook.com"
-        }
-    ],
-    "require": {
-        "php": ">=7.3.0",
-        "doctrine/dbal": "~2.9",
-        "illuminate/support": "~6.1",
-        "illuminate/database": "~6.1",
-        "illuminate/contracts": "~6.1",
-        "illuminate/filesystem": "~6.1",
-        "illuminate/console": "~6.1"
-    },
-    "require-dev": {
-        "fzaninotto/faker": "~1.8",
-        "mockery/mockery": "1.2",
-        "phpunit/phpunit": "~8.3"
-    },
-    "autoload": {
-        "psr-4": {
-            "Reliese\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
-        ]
-    },
-    "config": {
-        "preferred-install": "dist"
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Reliese\\Coders\\CodersServiceProvider"
-            ]
-        }
+  "name": "reliese/laravel",
+  "description": "Reliese Components for Laravel Framework code generation.",
+  "keywords": [
+    "reliese",
+    "laravel"
+  ],
+  "homepage": "http://cristianllanos.com",
+  "support": {
+    "issues": "https://github.com/reliese/laravel/issues",
+    "source": "https://github.com/reliese/laravel"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Cristian Llanos",
+      "email": "cristianllanos@outlook.com"
     }
+  ],
+  "require": {
+    "php": ">=7.3.0",
+    "doctrine/dbal": "~2.9",
+    "illuminate/support": "~6.1",
+    "illuminate/database": "~6.1",
+    "illuminate/contracts": "~6.1",
+    "illuminate/filesystem": "~6.1",
+    "illuminate/console": "~6.1"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "fzaninotto/faker": "~1.8",
+    "mockery/mockery": "^1.3",
+    "phpunit/phpunit": "~8.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Reliese\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "classmap": [
+      "tests/TestCase.php"
+    ]
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Reliese\\Coders\\CodersServiceProvider"
+      ]
+    }
+  }
 }
