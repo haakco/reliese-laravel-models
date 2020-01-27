@@ -24,7 +24,7 @@
     }
   ],
   "require": {
-    "php": ">=7.1.0",
+    "php": ">=7.3.0",
     "doctrine/dbal": "^2.10",
     "illuminate/support": "^6.12",
     "illuminate/database": "^6.12",
