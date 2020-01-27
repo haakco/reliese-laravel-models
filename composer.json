@@ -7,16 +7,20 @@
     "haakco",
     "model"
   ],
-  "homepage": "http://cristianllanos.com",
+  "homepage": "http://haak.co",
   "support": {
-    "issues": "https://github.com/reliese/laravel/issues",
-    "source": "https://github.com/reliese/laravel"
+    "issues": "https://github.com/haakco/reliese-laravel-models/issues",
+    "source": "https://github.com/haakco/reliese-laravel-models"
   },
   "license": "MIT",
   "authors": [
     {
       "name": "Cristian Llanos",
       "email": "cristianllanos@outlook.com"
+    },
+    {
+      "name": "Tim Haak",
+      "email": "tim@haak.co"
     }
   ],
   "require": {
