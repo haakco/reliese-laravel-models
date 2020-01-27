@@ -1,9 +1,11 @@
 {
-  "name": "reliese/laravel",
-  "description": "Reliese Components for Laravel Framework code generation.",
+  "name": "haakco/reliese-laravel-models",
+  "description": "Fork of Reliese Components for Laravel Framework code generation. With patches for postgresql, and a couple other things.",
   "keywords": [
     "reliese",
-    "laravel"
+    "laravel",
+    "haakco",
+    "model"
   ],
   "homepage": "http://cristianllanos.com",
   "support": {
