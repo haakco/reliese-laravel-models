@@ -24,13 +24,13 @@
     }
   ],
   "require": {
-    "php": ">=7.3.0",
-    "doctrine/dbal": "^2.10",
-    "illuminate/support": "^6.12",
-    "illuminate/database": "^6.12",
-    "illuminate/contracts": "^6.12",
-    "illuminate/filesystem": "^6.12",
-    "illuminate/console": "^6.12"
+    "php": ">=7.1.0",
+    "doctrine/dbal": ">=2.5",
+    "illuminate/support": ">=5.1",
+    "illuminate/database": ">=5.1",
+    "illuminate/contracts": ">=5.1",
+    "illuminate/filesystem": ">=5.1",
+    "illuminate/console": ">=5.1"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master",
