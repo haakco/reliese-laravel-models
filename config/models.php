@@ -43,7 +43,6 @@ return [
         'namespace' => 'App\Models',
 
         'namespace_connection'  => true,
-        'namespace_schema'      => true,
 
         /*
          |--------------------------------------------------------------------------
@@ -206,13 +205,14 @@ return [
         | Indent options
         |--------------------------------------------------------------------------
         |
-        | As default indention is done with tabs, but you can change it by setting
-        | this to the amount of spaces you that you want to use for indentation.
+        | As default indention is done with 4 spaces following PSR format, but you
+        | can change it by setting this to the amount of spaces you that you want
+        | to use or set to 0 to user tabs for indentation.
         | Usually you will use 4 spaces instead of tabs.
         |
         */
 
-        'indent_with_space' => 0,
+        'indent_with_space' => 4,
 
         /*
         |--------------------------------------------------------------------------
@@ -245,7 +245,9 @@ return [
         */
 
         'hidden' => [
-            '*secret*', '*password', '*token',
+            '*secret*',
+            '*password',
+            '*token',
         ],
 
         /*
@@ -296,7 +298,27 @@ return [
         */
 
         'except' => [
+            'cache',
+            'failed_jobs',
+            'jobs',
             'migrations',
+            'model_has_permissions',
+            'model_has_roles',
+            'notifications',
+            'oauth_access_tokens',
+            'oauth_auth_codes',
+            'oauth_clients',
+            'oauth_personal_access_clients',
+            'oauth_refresh_tokens',
+            'password_resets',
+            'permissions',
+            'roles',
+            'role_has_permissions',
+            'sessions',
+            'telescope_entries',
+            'telescope_entries_tags',
+            'telescope_monitoring',
+            'websockets_statistics_entries',
         ],
 
         /*
