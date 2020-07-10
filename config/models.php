@@ -302,8 +302,6 @@ return [
             'failed_jobs',
             'jobs',
             'migrations',
-            'model_has_permissions',
-            'model_has_roles',
             'notifications',
             'oauth_access_tokens',
             'oauth_auth_codes',
@@ -311,14 +309,10 @@ return [
             'oauth_personal_access_clients',
             'oauth_refresh_tokens',
             'password_resets',
-            'permissions',
-            'roles',
-            'role_has_permissions',
             'sessions',
             'telescope_entries',
             'telescope_entries_tags',
             'telescope_monitoring',
-            'websockets_statistics_entries',
         ],
 
         /*
