@@ -63,9 +63,11 @@ class Column implements \Reliese\Meta\Column
             'smallint',
             'smallserial',
         ],
-        'float' => [
+        'decimal' => [
             'numeric',
             'decimal',
+        ],
+        'float' => [
             'double precision',
             'float4',
             'float8',
@@ -163,8 +165,12 @@ class Column implements \Reliese\Meta\Column
             $this->parsePrecision($dataType, $matches[2], $attributes);
         }
 
-        if ($attributes['type'] == 'int') {
+        if ($attributes['type'] === 'int') {
             $attributes['unsigned'] = Str::contains($type, 'unsigned');
+        }
+
+        if ($attributes['type'] === 'decimal') {
+            $attributes['type'] .= ':' . $this->get('numeric_scale', 'string');
         }
     }
 
